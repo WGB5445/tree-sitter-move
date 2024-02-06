@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Move grammer for tree-sitter",
   "main": "bindings/node",
-  "keywords": ["parser", "move"],
+  "keywords": [
+    "parser",
+    "move"
+  ],
   "scripts": {
     "build": "tree-sitter generate && node-gyp build",
     "build-wasm": "tree-sitter build-wasm",
@@ -17,6 +20,8 @@
     "tree-sitter-cli": "^0.20.8"
   },
   "devDependencies": {
-    "nan": "^2.18.0"
+    "eslint": "^8.56.0",
+    "nan": "^2.18.0",
+    "prettier-eslint": "^16.3.0"
   }
 }

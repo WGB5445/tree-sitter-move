@@ -1,0 +1,70 @@
+============================================
+Base Use
+============================================
+
+use test::test;
+use test::test::test;
+use sayings::english::greetings as en_greetings ;
+use phrases::english::{greetings,farewells};
+use sayings::japanese::farewells::*;
+use sayings::english::{self, greetings as en_greetings, farewells as en_farewells};
+use three::{ dot::{one, four} };
+
+----
+
+(source_file
+      (use_declaration
+        argument: (scoped_identifier
+          path: (identifier)
+          name: (identifier)))
+      (use_declaration
+        argument: (scoped_identifier
+          path: (scoped_identifier
+            path: (identifier)
+            name: (identifier))
+          name: (identifier)))
+      (use_declaration
+        argument: (use_as_clause
+          path: (scoped_identifier
+            path: (scoped_identifier
+              path: (identifier)
+              name: (identifier))
+            name: (identifier))
+          alias: (identifier)))
+      (use_declaration
+        argument: (scoped_use_list
+          path: (scoped_identifier
+            path: (identifier)
+            name: (identifier))
+          list: (use_list
+            (identifier)
+            (identifier))))
+      (use_declaration
+        argument: (use_wildcard
+          (scoped_identifier
+            path: (scoped_identifier
+              path: (identifier)
+              name: (identifier))
+            name: (identifier))))
+      (use_declaration
+        argument: (scoped_use_list
+          path: (scoped_identifier
+            path: (identifier)
+            name: (identifier))
+          list: (use_list
+            (identifier)
+            (use_as_clause
+              path: (identifier)
+              alias: (identifier))
+            (use_as_clause
+              path: (identifier)
+              alias: (identifier)))))
+      (use_declaration
+        argument: (scoped_use_list
+          path: (identifier)
+          list: (use_list
+            (scoped_use_list
+              path: (identifier)
+              list: (use_list
+                (identifier)
+                (identifier)))))))

@@ -66,12 +66,35 @@ const primitive_types = numeric_types.concat(["bool"]);
 
 module.exports = grammar({
   name: "move",
+  word: ($) => $.identifier,
   externals: ($) => [],
   rules: {
     source_file: ($) => seq(repeat($._statement)),
     identifier: (_) => /[_a-zA-Z][_a-zA-Z0-9]*/,
     _statement: ($) => choice($._declaration_statement),
-    _declaration_statement: ($) => choice($.attribute_item),
+    _declaration_statement: ($) => choice($.attribute_item, $.use_declaration),
+
+    use_declaration: ($) => seq("use", field("argument", $._use_clause), ";"),
+
+    _use_clause: ($) =>
+      choice(
+        $._path,
+        $.use_as_clause,
+        $.use_list,
+        $.scoped_use_list,
+        $.use_wildcard,
+      ),
+
+    use_as_clause: ($) =>
+      seq(field("path", $._path), "as", field("alias", $.identifier)),
+
+    use_list: ($) =>
+      seq("{", sepBy(",", choice($._use_clause)), optional(","), "}"),
+
+    scoped_use_list: ($) =>
+      seq(field("path", optional($._path)), "::", field("list", $.use_list)),
+
+    use_wildcard: ($) => seq(optional(seq($._path, "::")), "*"),
 
     attribute_item: ($) => seq("#", "[", $.attribute, "]"),
     attribute: ($) =>
@@ -92,7 +115,13 @@ module.exports = grammar({
           ),
         ),
       ),
-    _path: ($) => seq($.identifier),
+    _path: ($) => seq(choice($.identifier, $.scoped_identifier)),
+    scoped_identifier: ($) =>
+      seq(
+        field("path", optional(choice($._path))),
+        "::",
+        field("name", choice($.identifier)),
+      ),
     address_literal: ($) => seq("@", choice($.hex_literal, $.identifier)),
     integer_literal: (_) =>
       token(
