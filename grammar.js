@@ -1,8 +1,7 @@
 /**
- * @file Rust grammar for tree-sitter
- * @author Maxim Sokolov <maxim0xff@gmail.com>
- * @author Max Brunsfeld
- * @author Amaan Qureshi <amaanq12@gmail.com>
+ * @file Move grammar for tree-sitter
+ * @author WGB5445 <wgb98512@gmail.com>
+ * @author WGB5445
  * @license MIT
  */
 
@@ -12,7 +11,6 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
-// https://doc.rust-lang.org/reference/expressions.html#expression-precedence
 const PREC = {
   call: 15,
   field: 14,
